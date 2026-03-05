@@ -207,6 +207,18 @@ def main():
 
     print_final_summary(epoch_losses, time.time() - train_start)
 
+    # Save model
+    save_path = "checkpoints/next_frame_mlp.pt"
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    torch.save({
+        "model_state_dict": model.state_dict(),
+        "optimizer_state_dict": optimizer.state_dict(),
+        "epoch": NUM_EPOCHS,
+        "loss": epoch_losses[-1],
+        "best_loss": best_loss,
+    }, save_path)
+    print(f"  Model saved to {save_path}")
+
 
 if __name__ == "__main__":
     main()
